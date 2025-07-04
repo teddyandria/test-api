@@ -80,7 +80,7 @@ describe("Exercises API", () => {
         expect(response.status).toBe(201);
         expect(response.headers.location).toBeDefined();
         expect(response.headers.location).toContain('/exercises/');
-        console.log("Location Header:", response.headers.location);
+        console.log(response.headers.location);
 
         return response.headers.location.split('/').pop()!;
     });
@@ -96,7 +96,7 @@ describe("Exercises API", () => {
         expect(exercises.length).toBeGreaterThan(0);
         createdExerciseId = exercises[exercises.length - 1].id;
 
-        console.log("Created Exercise ID:", createdExerciseId);
+        console.log(createdExerciseId);
     })
 
     it("DELETE /api/exercises/{id} - doit supprimer l'exercice", async () => {
@@ -141,9 +141,28 @@ describe("Exercises API", () => {
             .get(`/exercises/${exerciseId}`)
             .set("Authorization", `Bearer ${token}`);
 
-        console.log("Statut de l'exercice après finish:", getResponse.body.status);
         expect(getResponse.status).toBe(200);
         expect(getResponse.body).toHaveProperty("status", "Finished");
-
     });
+
+    // it("GET /api/exercises/{id}/events - doit retourner les événements d'un exercice", async () => {
+    //     const postResponse = await request(baseUrl)
+    //         .post("/exercises")
+    //         .set("Authorization", `Bearer ${token}`)
+    //         .set("Content-Type", "application/json")
+    //         .send(exercice);
+    //
+    //     const exerciseId = postResponse.headers.location.split('/').pop()!;
+    //
+    //     const eventsResponse = await request(baseUrl)
+    //         .get(`/exercises/${exerciseId}/events`)
+    //         .set("Authorization", `Bearer ${token}`);
+    //
+    //     expect(eventsResponse.status).toBe(200);
+    //     expect(Array.isArray(eventsResponse.body.events)).toBe(true);
+    //
+    //     await request(baseUrl)
+    //         .delete(`/exercises/${exerciseId}`)
+    //         .set("Authorization", `Bearer ${token}`);
+    // });
 });
