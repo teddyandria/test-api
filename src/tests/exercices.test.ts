@@ -58,10 +58,9 @@ describe("Exercises API", () => {
 
         expect(Array.isArray(response.body.exercises)).toBe(true);
 
-        // Nettoyer les exercices de test
         const exercises = response.body.exercises;
         for (const exercise of exercises) {
-            if (exercise.name === "Hello") { // Identifier les exercices de test
+            if (exercise.name === "Hello") {
                 await request(baseUrl)
                     .delete(`/exercises/${exercise.id}`)
                     .set("Authorization", `Bearer ${token}`);
@@ -145,24 +144,4 @@ describe("Exercises API", () => {
         expect(getResponse.body).toHaveProperty("status", "Finished");
     });
 
-    // it("GET /api/exercises/{id}/events - doit retourner les événements d'un exercice", async () => {
-    //     const postResponse = await request(baseUrl)
-    //         .post("/exercises")
-    //         .set("Authorization", `Bearer ${token}`)
-    //         .set("Content-Type", "application/json")
-    //         .send(exercice);
-    //
-    //     const exerciseId = postResponse.headers.location.split('/').pop()!;
-    //
-    //     const eventsResponse = await request(baseUrl)
-    //         .get(`/exercises/${exerciseId}/events`)
-    //         .set("Authorization", `Bearer ${token}`);
-    //
-    //     expect(eventsResponse.status).toBe(200);
-    //     expect(Array.isArray(eventsResponse.body.events)).toBe(true);
-    //
-    //     await request(baseUrl)
-    //         .delete(`/exercises/${exerciseId}`)
-    //         .set("Authorization", `Bearer ${token}`);
-    // });
 });
