@@ -101,7 +101,6 @@ describe("Exercises API", () => {
 
     it("DELETE /api/exercises/{id} - doit supprimer l'exercice", async () => {
 
-        // Créer d'abord un exercice
         const postResponse = await request(baseUrl)
             .post("/exercises")
             .set("Authorization", `Bearer ${token}`)
@@ -110,14 +109,12 @@ describe("Exercises API", () => {
 
         const exerciseId = postResponse.headers.location.split('/').pop()!;
 
-        // Suppression de l'exercice
         const deleteResponse = await request(baseUrl)
             .delete(`/exercises/${exerciseId}`)
             .set("Authorization", `Bearer ${token}`);
 
         expect([200, 204]).toContain(deleteResponse.status);
 
-        // Vérifier que l'exercice a bien été supprimé
         const getResponse = await request(baseUrl)
             .get(`/exercises/${exerciseId}`)
             .set("Authorization", `Bearer ${token}`);
@@ -126,7 +123,6 @@ describe("Exercises API", () => {
     });
 
     it("POST /api/exercises/{id}/finish - doit marquer l'exercice comme terminé", async () => {
-        // Créer d'abord un exercice
         const postResponse = await request(baseUrl)
             .post("/exercises")
             .set("Authorization", `Bearer ${token}`)
@@ -135,14 +131,12 @@ describe("Exercises API", () => {
 
         const exerciseId = postResponse.headers.location.split('/').pop()!;
 
-        // Marquer l'exercice comme terminé
         const finishResponse = await request(baseUrl)
             .post(`/exercises/${exerciseId}/finish`)
             .set("Authorization", `Bearer ${token}`);
 
         expect(finishResponse.status).toBe(204);
 
-        // Vérifier que l'exercice est bien marqué comme terminé
         const getResponse = await request(baseUrl)
             .get(`/exercises/${exerciseId}`)
             .set("Authorization", `Bearer ${token}`);
